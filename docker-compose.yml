@@ -21,10 +21,6 @@ services:
           "CMD-SHELL",
           "pg_isready --username=user --dbname=db"
         ]
-      interval: 1m30s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
     entrypoint: 
       [
         "yarn",
@@ -50,11 +46,31 @@ services:
     networks:
       - database
 
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - 8050:80
+    depends_on:
+      - pgsql
+    networks:
+      - database
+    healthcheck:
+      test: [
+        "CMD-SHELL",
+        "nc -vz localhost 2>&1 | grep 'open' || exit 1"]
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=brkntyldrm1@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=asdfasdf
+      - PGADMIN_CONFIG_SERVER_MODE=False
+
 networks:
   database:
 
 volumes:
   postgres:
+  pgadmin:
 
 
     
