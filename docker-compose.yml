@@ -1,0 +1,60 @@
+version: "3.5"
+x-app-enviroment:
+  &commonAppEnviroments
+  DB_TYPE: 'postgres'
+  APP_PORT: 3000
+  DB_HOST: "pgsql"
+  DB_PORT: "5432"
+  DB_NAME: "db"
+  DB_USERNAME: "user"
+  DB_PASSWORD: "asdfasdf"
+services:
+  nest:
+    image: brkntyldrm/nest:latest
+    volumes:
+     - .:/usr/src/app
+    depends_on:
+      - pgsql
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready --username=user --dbname=db"
+        ]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    entrypoint: 
+      [
+        "yarn",
+        "start:dev"
+      ]
+    environment: *commonAppEnviroments
+    ports:
+     - "3000:3000"
+    networks:
+      - database
+  
+  pgsql:
+    image: postgres:latest
+    command: postgres -c 'max_connections=200'
+    ports: 
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "db"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "asdfasdf"
+    networks:
+      - database
+
+networks:
+  database:
+
+volumes:
+  postgres:
+
+
+    
