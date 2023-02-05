@@ -7,7 +7,8 @@ x-app-enviroment:
   DB_PORT: "5432"
   DB_NAME: "db"
   DB_USERNAME: "user"
-  DB_PASSWORD: "asdfasdf"
+  DB_PASSWORD: "r00tr00t"
+  JWT_SECTER: "dasdasdsafagshdgashdgashdASDASFDASFsadas1321"
 services:
   nest:
     image: brkntyldrm/nest:latest
@@ -42,7 +43,7 @@ services:
     environment:
       POSTGRES_DB: "db"
       POSTGRES_USER: "user"
-      POSTGRES_PASSWORD: "asdfasdf"
+      POSTGRES_PASSWORD: "r00tr00t"
     networks:
       - database
 
@@ -62,7 +63,7 @@ services:
       - pgadmin:/var/lib/pgadmin
     environment:
       - PGADMIN_DEFAULT_EMAIL=brkntyldrm1@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=asdfasdf
+      - PGADMIN_DEFAULT_PASSWORD=r00tr00t
       - PGADMIN_CONFIG_SERVER_MODE=False
 
 networks:
