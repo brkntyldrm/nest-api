@@ -71,3 +71,19 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Typeorm Errors 
+
+In case of getaddrinfo EAI_AGAIN error
+
+go to your /etc/hosts file
+
+```sh
+sudo vim /etc/hosts # or sudo nano 
+```
+
+add the following lines to there
+
+- 0.0.0.0 pgsql
+- 0.0.0.0 nest
+
